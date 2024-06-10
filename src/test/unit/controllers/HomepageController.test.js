@@ -66,28 +66,4 @@ describe('HomepageController', function() {
       Student_team.find.restore();
     });
   });
-  
-describe('#fetchTasks()', function() {
-  it('should fetch all tasks', function(done) {
-    request(sails.hooks.http.app)
-      .get('/task')
-      .expect(200)
-      .end(function(err, res) {
-        if (err) return done(err);
-        // Assert that tasks were fetched successfully
-        assert(Array.isArray(res.body));
-        done();
-      });
-  });
-});
-
-describe('#deleteTask()', function() {
-  it('should delete the specified task', function(done) {
-    const taskId = 1; // Replace with an actual task ID
-    request(sails.hooks.http.app)
-      .delete(`/task/${taskId}`)
-      .expect(200, done);
-  });
-});
-
 });

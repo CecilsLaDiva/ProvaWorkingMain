@@ -11,6 +11,7 @@ module.exports = {
       const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
       let formattedUserData = {
+
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
@@ -68,29 +69,6 @@ module.exports = {
       });
     } catch (err) {
       return res.serverError({ error: 'An unexpected error occurred' });
-    }
-  },
-
-  logout: function (req, res) {
-    req.session.destroy(function (err) {
-      if (err) {
-        return res.status(500).json({ error: 'Failed to logout user' });
-      }
-      res.redirect('/login');
-    });
-  },
-
-  read: async function (req, res) {
-    try {
-      const userId = req.params.id;
-      const user = await User.findOne({ id: userId });
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-      return res.json(user);
-    } catch (err) {
-      console.error('Error fetching user:', err);
-      return res.status(500).json({ error: 'An unexpected error occurred' });
     }
   }
 };

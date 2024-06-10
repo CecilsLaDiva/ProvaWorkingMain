@@ -1334,6 +1334,14 @@ E | Analista
 &nbsp;&nbsp;&nbsp;&nbsp;Esta tela foi iniciada na primeira versão do site e está explicada na seção 4.1.3 denominada "Home". Porém, na segunda versão essa tela sofreu algumas alterações: o campo de scheduel foi removido, o campo de taks ganhou mais espaço e o medidor de felicidade do grupo ganhou uma lógica no backend, deixando de ser definido pelo usuário na homepage (visto que essa informação envolve todos os membros od time, e não só o usuário em si). Ainda, na seção de tasks, foi implementada uma regra de negócio que permite a criação de novas tasks, ou seja, quando o usuário clica no botão "create task" um pop-up é acionado, permitindo que uma nova task seja criada com título e descrição. Após a criação da task, o usuário poderá alterá-la (botão update) ou deletá-la (botão delete) dentro do prório card da task.
  
 <div align="center">
+<sub>Figura x - Parte superior da homepage</sub>
+
+![Home](assets/HomepageCima.png)
+
+<sup>Fonte: Material produzido pelos autores (2024)</sup>
+</div>
+
+<div align="center">
 <sub>Figura x - Quadro de tasks da homepage </sub>
 
 ![Home](assets/HomepageBaixo.png)

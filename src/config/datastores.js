@@ -14,6 +14,8 @@
  */
 
 module.exports.datastores = {
+
+
   /***************************************************************************
   *                                                                          *
   * Your app's default datastore.                                            *
@@ -31,6 +33,7 @@ module.exports.datastores = {
   ***************************************************************************/
 
   default: {
+
     /***************************************************************************
     *                                                                          *
     * Want to use a different database during development?                     *
@@ -46,7 +49,10 @@ module.exports.datastores = {
     *                                                                          *
     ***************************************************************************/
     adapter: 'sails-postgresql',
-    url: 'postgres://banco_final_user:zb6iwMNEX6yhvOUHfkorN89LDnaXfzgt@dpg-cpj6k521hbls73bqupsg-a.oregon-postgres.render.com/banco_final',
+    url: 'postgres://g03_user:d4MwFRR1dcKy7EnpW7KvhrunfEM7FrGr@dpg-cpb8dgnsc6pc73a49k5g-a.oregon-postgres.render.com/g03',
     ssl: true
+
   },
+
+
 };

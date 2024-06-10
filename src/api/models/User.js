@@ -27,7 +27,6 @@ module.exports = {
       type: 'string', 
       allowNull: false,
       unique: true,
-      required: true,
     },
 
     password: { 
