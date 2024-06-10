@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+
+</head>
+
+  <style>
+    body {
+      background: #FFF1E4;
+      font-family: 'Nunito', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .main {
+      margin-left: 100px;
+      width: calc(100% - 100px);
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .feeling-section, .profile-section {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      padding: 20px;
+      position: relative;
+    }
+
+    .feeling-section {
+      width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 20px;
+    }
+
+    .feeling-section h2 {
+      font-size: 30px;
+      color: #2E2640;
+      margin-bottom: 20px;
+    }
+
+    .feelings {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .feeling {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .feeling img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    .about-you {
+      background: linear-gradient(180deg, #187992 0%, #5699A8 27%, #FFF1E4 100%);
+      border-radius: 50%;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      position: relative;
+      width: 594px;
+      height: 414px;
+      margin-top: 20px;
+    }
+
+    .about-you h2 {
+      font-size: 48px;
+    }
+
+    .about-you p {
+      font-size: 30px;
+      margin: 10px 0;
+    }
+
+    .profile-section {
+      width: 514px;
+      background: #FBA324;
+      border-top-left-radius: 60px;
+      border-top-right-radius: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-section h2 {
+      font-size: 40px;
+      color: black;
+      margin-top: 20px;
+    }
+
+    .profile-picture {
+      width: 350px;
+      height: 350px;
+      background: #D9D9D9;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .upload-button {
+      background: #FE4451;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  </style>
+<body class="profile-body">
+  <!-- Heading for the profile page -->
+  <h1 class="profile-heading">Profile</h1>
+  <div class="main">
+    <div>
+      <div class="feeling-section">
+        <h2>How are you feeling?</h2>
+        <div class="feelings">
+          <div class="feeling">
+            <img src="images/vsad.svg" alt="Very Sad">
+          </div>
+          <div class="feeling">
+            <img src="images/sss.svg" alt="Sad">
+          </div>
+          <div class="feeling">
+            <img src="images/neutral.svg" alt="Neutral">
+          </div>
+          <div class="feeling">
+            <img src="images/hpy.svg" alt="Happy">
+          </div>
+          <div class="feeling">
+            <img src="images/vhappy.svg" alt="Very Happy">
+          </div>
+        </div>
+      </div>
+      <div class="about-you">
+        <h2>About you</h2>
+        <p>University: <%= user.university %></p>
+        <p>Nationality: <%= user.country %></p>
+        <p>Email: <%= user.email %></p>
+      </div>
+    </div>
+    <div class="profile-section">
+      <h2>Name: <%= user.firstname %> <%= user.lastname %></h2>
+      <div class="profile-picture">
+        <% if (user.photo) { %>
+          <img id="profile-image" src="<%= user.photo %>" alt="Profile Picture">
+        <% } else { %>
+          <span id="profile-emoji" style="font-size: 150px;">&#128100;</span>
+        <% } %>
+      </div>
+      <form id="upload-form" enctype="multipart/form-data" style="text-align: center;">
+        <input type="file" id="file-input" name="profile_photo" style="display:none;" onchange="submitForm()">
+        <button type="button" class="upload-button" onclick="document.getElementById('file-input').click()">Upload picture</button>
+      </form>
+    </div>
+  </div>
+
+
+
+</body>
+
+  <script>
+    function submitForm() {
+      const form = document.getElementById('upload-form');
+      const formData = new FormData(form);
+
+      fetch('/api/v1/user/upload', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Upload successful!');
+            const profileImage = document.getElementById('profile-image');
+            const profileEmoji = document.getElementById('profile-emoji');
+            profileImage.src = data.url;
+            profileImage.style.display = 'block';
+            profileEmoji.style.display = 'none';
+          } else {
+            alert('Upload failed!');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred during upload.');
+        });
+    }
+
+    document.getElementById('submitHappiness').addEventListener('click', function () {
+      const happiness = document.getElementById('happinessRange').value;
+
+      fetch('/profile/update-happiness', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': '<%= _csrf %>'
+        },
+        body: JSON.stringify({ happiness })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert('An error occurred: ' + data.error);
+          } else {
+            location.reload();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  </script>
+
+</html>
